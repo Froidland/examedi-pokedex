@@ -1,3 +1,4 @@
+import bg from "@/assets/bg.png";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -15,7 +16,12 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html
+			lang="en"
+			style={{
+				backgroundImage: `url(${bg.src})`,
+			}}
+		>
 			<body className={inter.className}>{children}</body>
 		</html>
 	);

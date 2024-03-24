@@ -1,7 +1,6 @@
 "use client";
 
 import PokemonList from "@/components/PokemonList";
-import bg from "./bg.png";
 import { getPokemonList } from "@/lib/pokemon";
 import type { PokemonListResult } from "@/lib/types";
 import { useEffect, useState } from "react";
@@ -30,10 +29,7 @@ export default function Home() {
 	}, []);
 
 	return (
-		<main
-			className="flex w-full justify-center pb-40"
-			style={{ backgroundImage: `url(${bg.src})` }}
-		>
+		<main className="flex w-full justify-center pb-40">
 			<div className="w-[900px] px-8 pb-4 bg-white rounded-lg">
 				<PokemonList data={pokemonList} />
 				<div className="flex w-full justify-center pt-20">
