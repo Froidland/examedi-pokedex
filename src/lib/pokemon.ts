@@ -2,7 +2,7 @@ import type { Pokemon, PokemonList, Type } from "./types";
 
 const API_BASE_URL = "https://pokeapi.co/api/v2";
 
-export async function getPokemon(id: number): Promise<Pokemon | null> {
+export async function getPokemonById(id: number): Promise<Pokemon | null> {
 	let res;
 	try {
 		res = await fetch(`${API_BASE_URL}/pokemon/${id}`);
