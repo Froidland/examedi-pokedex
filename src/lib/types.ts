@@ -32,7 +32,10 @@ export type Pokemon = {
 	species: NamedAPIResource;
 	sprites: unknown;
 	stats: PokemonStat[];
-	types: PokemonType[];
+	types: {
+		slot: number;
+		type: NamedAPIResource;
+	}[];
 	weight: number;
 };
 
@@ -65,11 +68,6 @@ export type PokemonStat = {
 	base_stat: number;
 	effort: number;
 	stat: NamedAPIResource;
-};
-
-export type PokemonType = {
-	slot: number;
-	type: NamedAPIResource;
 };
 
 export type Type = {
