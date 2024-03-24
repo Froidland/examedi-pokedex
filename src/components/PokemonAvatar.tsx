@@ -6,7 +6,7 @@ export default function PokemonAvatar({
 	width,
 	height,
 }: {
-	pokemonName: string;
+	pokemonName?: string;
 	pokemonId: number;
 	width: number;
 	height: number;
@@ -17,7 +17,7 @@ export default function PokemonAvatar({
 				.toString()
 				.padStart(3, "0")}.png`}
 			className="bg-[#F2F2F2] rounded-lg p-2"
-			alt={"An image of " + pokemonName}
+			alt={pokemonName ? "An image of " + pokemonName : "An image of a pokemon"}
 			width={width}
 			height={height}
 		></Image>
