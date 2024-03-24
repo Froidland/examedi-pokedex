@@ -64,10 +64,6 @@ export const pokemonTypeColors: {
 		textColor: string;
 	};
 } = {
-	default: {
-		primaryColor: "#A4ACAF",
-		textColor: "#212121",
-	},
 	bug: {
 		primaryColor: "#729F3F",
 		textColor: "#fff",

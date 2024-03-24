@@ -7,7 +7,10 @@ export default function PokemonTypeChip({
 	size?: Size;
 	typeName: string;
 }) {
-	const type = pokemonTypeColors[typeName] || pokemonTypeColors.default;
+	const type = pokemonTypeColors[typeName] || {
+		primaryColor: "#A4ACAF",
+		textColor: "#212121",
+	};
 	const typeText = pokemonTypeTranslations[typeName] || typeName;
 
 	return (
