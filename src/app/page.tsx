@@ -2,12 +2,12 @@
 
 import PokemonList from "@/components/PokemonList";
 import { getPokemonList } from "@/lib/pokemon";
-import type { PokemonListResult } from "@/lib/types";
+import type { NamedAPIResource } from "@/lib/types";
 import { useEffect, useState } from "react";
 // https://pokeapi.co/docs/v2
 
 export default function Home() {
-	const [pokemonList, setPokemonList] = useState<PokemonListResult[]>([]);
+	const [pokemonList, setPokemonList] = useState<NamedAPIResource[]>([]);
 	const [offset, setOffset] = useState<number>(0);
 
 	function handleLoadMorePokemon() {

@@ -1,13 +1,13 @@
+export type NamedAPIResource = {
+	name: string;
+	url: string;
+};
+
 export type PokemonList = {
 	count: number;
 	next: string | null;
 	previous: string | null;
-	results: PokemonListResult[];
-};
-
-export type PokemonListResult = {
-	name: string;
-	url: string;
+	results: NamedAPIResource[];
 };
 
 export type Pokemon = {
@@ -18,7 +18,7 @@ export type Pokemon = {
 		legacy: string;
 	};
 	forms: PokemonForm[];
-	game_indices: PokemonGameIndex[];
+	game_indices: GameIndex[];
 	height: number;
 	held_items: unknown[];
 	id: number;
@@ -29,20 +29,15 @@ export type Pokemon = {
 	order: number;
 	past_abilites: unknown[];
 	past_types: unknown[];
-	species: {
-		name: string;
-		url: string;
-	};
+	species: NamedAPIResource;
 	sprites: unknown;
 	stats: PokemonStat[];
 	types: PokemonType[];
+	weight: number;
 };
 
 export type PokemonAbility = {
-	ability: {
-		name: string;
-		url: string;
-	};
+	ability: NamedAPIResource;
 	is_hidden: boolean;
 	slot: number;
 };
@@ -52,45 +47,53 @@ export type PokemonForm = {
 	url: string;
 };
 
-export type PokemonGameIndex = {
+export type GameIndex = {
 	game_index: number;
-	version: {
-		name: string;
-		url: string;
-	};
+	version: NamedAPIResource;
 };
 
 export type PokemonMove = {
-	move: {
-		name: string;
-		url: string;
-	};
+	move: NamedAPIResource;
 	version_group_details: {
 		level_learned_at: number;
-		move_learn_method: {
-			name: string;
-			url: string;
-		};
-		version_group: {
-			name: string;
-			url: string;
-		};
+		move_learn_method: NamedAPIResource;
+		version_group: NamedAPIResource;
 	}[];
 };
 
 export type PokemonStat = {
 	base_stat: number;
 	effort: number;
-	stat: {
-		name: string;
-		url: string;
-	};
+	stat: NamedAPIResource;
 };
 
 export type PokemonType = {
 	slot: number;
-	type: {
-		name: string;
-		url: string;
+	type: NamedAPIResource;
+};
+
+export type Type = {
+	damage_relations: {
+		double_damage_from: NamedAPIResource[];
+		double_damage_to: NamedAPIResource[];
+		half_damage_from: NamedAPIResource[];
+		half_damage_to: NamedAPIResource[];
+		no_damage_from: NamedAPIResource[];
+		no_damage_to: NamedAPIResource[];
 	};
+	game_indices: GameIndex[];
+	generation: NamedAPIResource;
+	id: number;
+	move_damage_class: NamedAPIResource;
+	moves: NamedAPIResource[];
+	name: string;
+	names: {
+		language: NamedAPIResource;
+		name: string;
+	}[];
+	past_damage_relations: any[];
+	pokemon: {
+		pokemon: NamedAPIResource;
+		slot: number;
+	}[];
 };
