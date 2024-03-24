@@ -21,6 +21,7 @@ export default function PokemonCard({
 
 	return (
 		<div className="p-2 flex flex-col items-center mb-6 max-w-64">
+		<div className="p-2 flex flex-col items-center pb-8 max-w-64">
 			<Link href={`/pokemon/${pokemonId}`}>
 				<PokemonAvatar
 					pokemonName={name}
