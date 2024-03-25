@@ -18,7 +18,10 @@ export type Pokemon = {
 		legacy: string;
 	};
 	forms: PokemonForm[];
-	game_indices: GameIndex[];
+	game_indices: {
+		game_index: string;
+		version: NamedAPIResource;
+	}[];
 	height: number;
 	held_items: unknown[];
 	id: number;
@@ -50,11 +53,6 @@ export type PokemonForm = {
 	url: string;
 };
 
-export type GameIndex = {
-	game_index: number;
-	version: NamedAPIResource;
-};
-
 export type PokemonMove = {
 	move: NamedAPIResource;
 	version_group_details: {
@@ -70,7 +68,7 @@ export type PokemonStat = {
 	stat: NamedAPIResource;
 };
 
-export type Type = {
+export type PokemonType = {
 	damage_relations: {
 		double_damage_from: NamedAPIResource[];
 		double_damage_to: NamedAPIResource[];
@@ -79,7 +77,10 @@ export type Type = {
 		no_damage_from: NamedAPIResource[];
 		no_damage_to: NamedAPIResource[];
 	};
-	game_indices: GameIndex[];
+	game_indices: {
+		game_index: string;
+		version: NamedAPIResource;
+	}[];
 	generation: NamedAPIResource;
 	id: number;
 	move_damage_class: NamedAPIResource;
@@ -94,4 +95,68 @@ export type Type = {
 		pokemon: NamedAPIResource;
 		slot: number;
 	}[];
+};
+
+export type PokemonSpecies = {
+	base_happiness: number;
+	capture_rate: number;
+	color: NamedAPIResource;
+	egg_groups: NamedAPIResource[];
+	evolution_chain: EvolutionChain;
+	evolves_from_species: null;
+	flavor_text_entries: {
+		flavor_text: string;
+		language: NamedAPIResource;
+		version: NamedAPIResource;
+	}[];
+	form_descriptions: any[];
+	forms_switchable: boolean;
+	gender_rate: number;
+	genera: Genus[];
+	generation: NamedAPIResource;
+	growth_rate: NamedAPIResource;
+	habitat: NamedAPIResource;
+	has_gender_differences: boolean;
+	hatch_counter: number;
+	id: number;
+	is_baby: boolean;
+	is_legendary: boolean;
+	is_mythical: boolean;
+	name: string;
+	names: Name[];
+	order: number;
+	pal_park_encounters: PalParkEncounter[];
+	pokedex_numbers: PokedexNumber[];
+	shape: NamedAPIResource;
+	varieties: Variety[];
+};
+
+export type EvolutionChain = {
+	url: string;
+};
+
+export type Genus = {
+	genus: string;
+	language: NamedAPIResource;
+};
+
+export type Name = {
+	language: NamedAPIResource;
+	name: string;
+};
+
+export type PalParkEncounter = {
+	area: NamedAPIResource;
+	base_score: number;
+	rate: number;
+};
+
+export type PokedexNumber = {
+	entry_number: number;
+	pokedex: NamedAPIResource;
+};
+
+export type Variety = {
+	is_default: boolean;
+	pokemon: NamedAPIResource;
 };

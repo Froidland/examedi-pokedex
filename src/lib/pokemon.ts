@@ -1,4 +1,9 @@
-import type { Pokemon, PokemonList, Type } from "./types";
+import type {
+	Pokemon,
+	PokemonList,
+	PokemonSpecies,
+	PokemonType,
+} from "./types";
 
 const API_BASE_URL = "https://pokeapi.co/api/v2";
 
@@ -55,6 +60,146 @@ export async function getPokemonList(
 	}
 
 	return data;
+}
+
+export async function getTypeById(id: number): Promise<PokemonType | null> {
+	let res;
+	try {
+		res = await fetch(`${API_BASE_URL}/type/${id}`);
+	} catch (err) {
+		console.error(err);
+		return null;
+	}
+
+	if (!res.ok) {
+		console.error(res.statusText);
+		return null;
+	}
+
+	let data;
+	try {
+		data = await res.json();
+	} catch (err) {
+		console.error(err);
+		return null;
+	}
+
+	return data;
+}
+
+export async function getPokemonTypesByPokemon(
+	pokemon: Pokemon
+): Promise<PokemonType[] | null> {
+	const data = [];
+
+	for (const type of pokemon.types) {
+		let res;
+		try {
+			res = await fetch(type.type.url);
+		} catch (err) {
+			console.error(err);
+			return null;
+		}
+
+		if (!res.ok) {
+			console.error(res.statusText);
+			return null;
+		}
+
+		let json;
+		try {
+			json = await res.json();
+		} catch (err) {
+			console.error(err);
+			return null;
+		}
+
+		data.push(json);
+	}
+
+	return data;
+}
+
+export async function getPokemonSpeciesByPokemon(
+	pokemon: Pokemon
+): Promise<PokemonSpecies | null> {
+	let res;
+	try {
+		res = await fetch(pokemon.species.url);
+	} catch (err) {
+		console.error(err);
+		return null;
+	}
+
+	if (!res.ok) {
+		console.error(res.statusText);
+		return null;
+	}
+
+	let data;
+	try {
+		data = await res.json();
+	} catch (err) {
+		console.error(err);
+		return null;
+	}
+
+	return data;
+}
+
+const BaseTypeStats: {
+	[key: string]: number;
+} = {
+	normal: 1,
+	fire: 1,
+	water: 1,
+	electric: 1,
+	grass: 1,
+	ice: 1,
+	fighting: 1,
+	poison: 1,
+	ground: 1,
+	flying: 1,
+	psychic: 1,
+	bug: 1,
+	rock: 1,
+	ghost: 1,
+	dragon: 1,
+	dark: 1,
+	steel: 1,
+	fairy: 1,
+};
+
+export function getPokemonTypeWeaknesses(types: PokemonType[]): string[] {
+	const weaknesses: string[] = [];
+	const base = structuredClone(BaseTypeStats);
+
+	for (const type of types) {
+		const damageRelations = type.damage_relations;
+		for (const doubleDamageFrom of damageRelations.double_damage_from) {
+			if (base[doubleDamageFrom.name]) {
+				base[doubleDamageFrom.name] *= 2;
+			}
+		}
+		for (const halfDamageFrom of damageRelations.half_damage_from) {
+			if (base[halfDamageFrom.name]) {
+				base[halfDamageFrom.name] *= 0.5;
+			}
+		}
+		for (const noDamageFrom of damageRelations.no_damage_from) {
+			if (base[noDamageFrom.name]) {
+				base[noDamageFrom.name] *= 0;
+			}
+		}
+	}
+
+	for (const key in base) {
+		if (base[key] > 1) {
+			weaknesses.push(key);
+		}
+	}
+
+	return weaknesses;
 }
 
 export const pokemonTypeColors: {
