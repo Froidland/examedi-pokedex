@@ -1,24 +1,13 @@
-import {
-	getPokemonById,
-	getPokemonSpeciesByPokemon,
-	getPokemonTypeWeaknesses,
-	getPokemonTypesByPokemon,
-} from "@/lib/pokemon";
+import { getPokemonById } from "@/lib/pokemon";
 import { RedirectType, redirect } from "next/navigation";
 import PokemonAvatar from "@/components/PokemonAvatar";
 import { capitalize } from "@/lib/utils";
 import Image from "next/image";
 import RedPokeballIcon from "@/assets/pokeball_red.png";
 import BluePokeballIcon from "@/assets/pokeball_blue.png";
-import PokemonTypeChip from "@/components/PokemonTypeChip";
-import PokemonStatsGauge from "@/components/PokemonStatsGauge";
 import PokemonStatsGraph from "@/components/PokemonStatsGraph";
 import PokemonInfoCard from "@/components/PokemonInfoCard";
-import PokemonInfoCardColumn from "@/components/PokemonInfoCardColumn";
-import { MaleSignIcon } from "@/components/icons/MaleSignIcon";
-import { FemaleSignIcon } from "@/components/icons/FemaleSignIcon";
 import Link from "next/link";
-import bgGray from "@/assets/bg_gray.png";
 import PokemonTypesSection from "@/components/PokemonTypesSection";
 import PokemonEvolutionCard from "@/components/PokemonEvolutionCard";
 
