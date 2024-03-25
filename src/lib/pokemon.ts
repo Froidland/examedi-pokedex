@@ -1,5 +1,6 @@
 import type {
 	Pokemon,
+	PokemonEvolutionChain,
 	PokemonList,
 	PokemonSpecies,
 	PokemonType,
@@ -27,6 +28,41 @@ export async function getPokemonById(id: number): Promise<Pokemon | null> {
 	} catch (err) {
 		console.error(err);
 		return null;
+	}
+
+	return data;
+}
+
+export async function getPokemonByName(
+	name: string | string[]
+): Promise<Pokemon[] | null> {
+	const data = [];
+
+	const names = typeof name === "string" ? [name] : name;
+
+	for (const name of names) {
+		let res;
+		try {
+			res = await fetch(`${API_BASE_URL}/pokemon/${name}`);
+		} catch (err) {
+			console.error(err);
+			return null;
+		}
+
+		if (!res.ok) {
+			console.error(res.statusText);
+			return null;
+		}
+
+		let json;
+		try {
+			json = await res.json();
+		} catch (err) {
+			console.error(err);
+			return null;
+		}
+
+		data.push(json);
 	}
 
 	return data;
@@ -62,40 +98,17 @@ export async function getPokemonList(
 	return data;
 }
 
-export async function getTypeById(id: number): Promise<PokemonType | null> {
-	let res;
-	try {
-		res = await fetch(`${API_BASE_URL}/type/${id}`);
-	} catch (err) {
-		console.error(err);
-		return null;
-	}
-
-	if (!res.ok) {
-		console.error(res.statusText);
-		return null;
-	}
-
-	let data;
-	try {
-		data = await res.json();
-	} catch (err) {
-		console.error(err);
-		return null;
-	}
-
-	return data;
-}
-
-export async function getPokemonTypesByPokemon(
-	pokemon: Pokemon
+export async function getPokemonTypesByName(
+	name: string | string[]
 ): Promise<PokemonType[] | null> {
 	const data = [];
 
-	for (const type of pokemon.types) {
+	const names = typeof name === "string" ? [name] : name;
+
+	for (const type of names) {
 		let res;
 		try {
-			res = await fetch(type.type.url);
+			res = await fetch(`${API_BASE_URL}/type/${type}`);
 		} catch (err) {
 			console.error(err);
 			return null;
@@ -120,12 +133,12 @@ export async function getPokemonTypesByPokemon(
 	return data;
 }
 
-export async function getPokemonSpeciesByPokemon(
-	pokemon: Pokemon
+export async function getPokemonSpeciesByName(
+	name: string
 ): Promise<PokemonSpecies | null> {
 	let res;
 	try {
-		res = await fetch(pokemon.species.url);
+		res = await fetch(`${API_BASE_URL}/pokemon-species/${name}`);
 	} catch (err) {
 		console.error(err);
 		return null;
@@ -147,7 +160,48 @@ export async function getPokemonSpeciesByPokemon(
 	return data;
 }
 
-const BaseTypeStats: {
+export async function getPokemonEvolutionChainById(
+	id: number
+): Promise<PokemonEvolutionChain | null> {
+	let res;
+	try {
+		res = await fetch(`${API_BASE_URL}/evolution-chain/${id}`);
+	} catch (err) {
+		console.error(err);
+		return null;
+	}
+
+	if (!res.ok) {
+		console.error(res.statusText);
+		return null;
+	}
+
+	let data;
+	try {
+		data = await res.json();
+	} catch (err) {
+		console.error(err);
+		return null;
+	}
+
+	return data;
+}
+
+export function flattenEvolutionChainNames(
+	evolutionChain: PokemonEvolutionChain
+): string[] {
+	const chain = [];
+	let current = evolutionChain.chain;
+
+	while (current) {
+		chain.push(current.species.name);
+		current = current.evolves_to[0];
+	}
+
+	return chain;
+}
+
+const baseTypeStats: {
 	[key: string]: number;
 } = {
 	normal: 1,
@@ -170,9 +224,9 @@ const BaseTypeStats: {
 	fairy: 1,
 };
 
-export function getPokemonTypeWeaknesses(types: PokemonType[]): string[] {
+export function calculatePokemonTypeWeaknesses(types: PokemonType[]): string[] {
 	const weaknesses: string[] = [];
-	const base = structuredClone(BaseTypeStats);
+	const base = { ...baseTypeStats };
 
 	for (const type of types) {
 		const damageRelations = type.damage_relations;

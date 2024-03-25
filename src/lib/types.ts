@@ -11,13 +11,17 @@ export type PokemonList = {
 };
 
 export type Pokemon = {
-	abilities: PokemonAbility[];
+	abilities: {
+		is_hidden: boolean;
+		slot: number;
+		ability: NamedAPIResource;
+	}[];
 	base_experience: number;
 	cries: {
 		latest: string;
 		legacy: string;
 	};
-	forms: PokemonForm[];
+	forms: NamedAPIResource[];
 	game_indices: {
 		game_index: string;
 		version: NamedAPIResource;
@@ -27,45 +31,30 @@ export type Pokemon = {
 	id: number;
 	is_default: boolean;
 	location_area_encounters: string;
-	moves: PokemonMove[];
+	moves: {
+		move: NamedAPIResource;
+		version_group_details: {
+			level_learned_at: number;
+			move_learn_method: NamedAPIResource;
+			version_group: NamedAPIResource;
+		}[];
+	}[];
 	name: string;
 	order: number;
 	past_abilites: unknown[];
 	past_types: unknown[];
 	species: NamedAPIResource;
 	sprites: unknown;
-	stats: PokemonStat[];
+	stats: {
+		base_stat: number;
+		effort: number;
+		stat: NamedAPIResource;
+	}[];
 	types: {
 		slot: number;
 		type: NamedAPIResource;
 	}[];
 	weight: number;
-};
-
-export type PokemonAbility = {
-	ability: NamedAPIResource;
-	is_hidden: boolean;
-	slot: number;
-};
-
-export type PokemonForm = {
-	name: string;
-	url: string;
-};
-
-export type PokemonMove = {
-	move: NamedAPIResource;
-	version_group_details: {
-		level_learned_at: number;
-		move_learn_method: NamedAPIResource;
-		version_group: NamedAPIResource;
-	}[];
-};
-
-export type PokemonStat = {
-	base_stat: number;
-	effort: number;
-	stat: NamedAPIResource;
 };
 
 export type PokemonType = {
@@ -102,8 +91,10 @@ export type PokemonSpecies = {
 	capture_rate: number;
 	color: NamedAPIResource;
 	egg_groups: NamedAPIResource[];
-	evolution_chain: EvolutionChain;
-	evolves_from_species: null;
+	evolution_chain: {
+		url: string;
+	};
+	evolves_from_species: unknown;
 	flavor_text_entries: {
 		flavor_text: string;
 		language: NamedAPIResource;
@@ -112,7 +103,10 @@ export type PokemonSpecies = {
 	form_descriptions: any[];
 	forms_switchable: boolean;
 	gender_rate: number;
-	genera: Genus[];
+	genera: {
+		genus: string;
+		language: NamedAPIResource;
+	}[];
 	generation: NamedAPIResource;
 	growth_rate: NamedAPIResource;
 	habitat: NamedAPIResource;
@@ -123,40 +117,55 @@ export type PokemonSpecies = {
 	is_legendary: boolean;
 	is_mythical: boolean;
 	name: string;
-	names: Name[];
+	names: {
+		language: NamedAPIResource;
+		name: string;
+	}[];
 	order: number;
-	pal_park_encounters: PalParkEncounter[];
-	pokedex_numbers: PokedexNumber[];
+	pal_park_encounters: {
+		area: NamedAPIResource;
+		base_score: number;
+		rate: number;
+	}[];
+	pokedex_numbers: {
+		entry_number: number;
+		pokedex: NamedAPIResource;
+	}[];
 	shape: NamedAPIResource;
-	varieties: Variety[];
+	varieties: {
+		is_default: boolean;
+		pokemon: NamedAPIResource;
+	}[];
 };
 
-export type EvolutionChain = {
-	url: string;
-};
+export interface PokemonEvolutionChain {
+	baby_trigger_item: unknown;
+	chain: EvolutionChain;
+	id: number;
+}
 
-export type Genus = {
-	genus: string;
-	language: NamedAPIResource;
-};
-
-export type Name = {
-	language: NamedAPIResource;
-	name: string;
-};
-
-export type PalParkEncounter = {
-	area: NamedAPIResource;
-	base_score: number;
-	rate: number;
-};
-
-export type PokedexNumber = {
-	entry_number: number;
-	pokedex: NamedAPIResource;
-};
-
-export type Variety = {
-	is_default: boolean;
-	pokemon: NamedAPIResource;
-};
+export interface EvolutionChain {
+	evolution_details: {
+		gender: unknown;
+		held_item: unknown;
+		item: unknown;
+		known_move: unknown;
+		known_move_type: unknown;
+		location: unknown;
+		min_affection: unknown;
+		min_beauty: unknown;
+		min_happiness: unknown;
+		min_level: number;
+		needs_overworld_rain: boolean;
+		party_species: unknown;
+		party_type: unknown;
+		relative_physical_stats: unknown;
+		time_of_day: string;
+		trade_species: unknown;
+		trigger: NamedAPIResource;
+		turn_upside_down: boolean;
+	}[];
+	evolves_to: EvolutionChain[];
+	is_baby: boolean;
+	species: NamedAPIResource;
+}

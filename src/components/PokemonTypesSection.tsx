@@ -1,6 +1,6 @@
 import {
-	getPokemonTypeWeaknesses,
-	getPokemonTypesByPokemon,
+	calculatePokemonTypeWeaknesses,
+	getPokemonTypesByName as getPokemonTypeByName,
 } from "@/lib/pokemon";
 import type { Pokemon } from "@/lib/types";
 import PokemonTypeChip from "./PokemonTypeChip";
@@ -10,11 +10,13 @@ export default async function PokemonTypesSection({
 }: {
 	pokemon: Pokemon;
 }) {
-	const pokemonTypes = await getPokemonTypesByPokemon(pokemon);
+	const pokemonTypes = await getPokemonTypeByName(
+		pokemon.types.map((type) => type.type.name)
+	);
 
 	let pokemonWeaknesses;
 	if (pokemonTypes) {
-		pokemonWeaknesses = getPokemonTypeWeaknesses(pokemonTypes);
+		pokemonWeaknesses = calculatePokemonTypeWeaknesses(pokemonTypes);
 	}
 
 	return (
@@ -29,7 +31,7 @@ export default async function PokemonTypesSection({
 					></PokemonTypeChip>
 				))}
 			</div>
-			{pokemonWeaknesses ? (
+			{pokemonWeaknesses && (
 				<>
 					<p className="text-xl">Debilidad</p>
 					<div className="grid grid-cols-3 gap-3">
@@ -42,7 +44,7 @@ export default async function PokemonTypesSection({
 						))}
 					</div>
 				</>
-			) : null}
+			)}
 		</div>
 	);
 }
