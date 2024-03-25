@@ -1,9 +1,10 @@
 import bg from "@/assets/bg.png";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const flexoMediumFont = localFont({ src: "../assets/fonts/Flexo-Medium.ttf" });
 
 export const metadata: Metadata = {
 	title: "Pokedex",
@@ -22,7 +23,7 @@ export default function RootLayout({
 				backgroundImage: `url(${bg.src})`,
 			}}
 		>
-			<body className={inter.className}>{children}</body>
+			<body className={`${flexoMediumFont.className}`}>{children}</body>
 		</html>
 	);
 }
