@@ -57,6 +57,7 @@ export default async function PokemonEvolutionCard({
 			{/* prettier-ignore */}
 			<div className={`grid grid-cols-${evolutionPokemons.length} ${evolutionPokemons.length < 3 ? "mx-28" : ""} gap-4 pt-4`}>
 				{evolutionPokemons.map((pokemon, index) => (
+					// I have no idea how to make the arrows between the evolutions
 					<PokemonEvolutionCardSlot pokemon={pokemon} key={index} />
 				))}
 			</div>

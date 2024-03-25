@@ -6,7 +6,18 @@ const nextConfig = {
 				protocol: "https",
 				hostname: "assets.pokemon.com",
 			},
+			{
+				protocol: "https",
+				hostname: "raw.githubusercontent.com",
+			},
+			{
+				protocol: "https",
+				hostname: "via.placeholder.com",
+			},
 		],
+	},
+	experimental: {
+		missingSuspenseWithCSRBailout: false,
 	},
 };
 

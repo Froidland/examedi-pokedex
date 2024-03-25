@@ -1,5 +1,4 @@
 import Link from "next/link";
-import PokemonAvatar from "./PokemonAvatar";
 import { capitalize } from "@/lib/utils";
 import PokemonTypeChip from "./PokemonTypeChip";
 import { getPokemonById } from "@/lib/pokemon";
@@ -23,7 +22,7 @@ export default function PokemonCard({
 	return (
 		<div className="p-2 flex flex-col items-center pb-8 max-w-64">
 			<Link href={`/pokemon/${pokemonId}`}>
-				<PokemonThumbnail pokemonName={name} pokemonId={pokemonId} />
+				<PokemonThumbnail pokemonName={name} pokemonId={pokemonId} fallback={pokemonData?.sprites.front_default} />
 			</Link>
 			<div className="flex flex-col w-full px-3 pt-1">
 				<span className="text-[#919191] text-xs font-bold">
