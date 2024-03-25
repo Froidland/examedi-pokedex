@@ -23,10 +23,11 @@ export default function PokemonTypeChip({
 					" 50%, " +
 					(type.secondaryColor || type.primaryColor) +
 					" 50%)",
-				color: type.textColor,
 			}}
 		>
-			{typeText}
+			<span style={{ color: type.textColor }} className="font-medium">
+				{typeText}
+			</span>
 		</span>
 	);
 }
@@ -34,7 +35,7 @@ export default function PokemonTypeChip({
 const sizeToStyle = {
 	sm: "px-4 py-[0.4px] text-[11px] rounded-[3px]",
 	md: "px-5 py-[1px] text-[12px] rounded-md",
-	lg: "px-7 py-[2px] text-[14px] rounded-md",
+	lg: "px-7 py-[3px] text-[14px] rounded-md",
 	xl: "px-8 py-[4px] text-[15px] rounded-md",
 	"2xl": "px-10 py-[6px] text-[16px] rounded-md",
 } as const;
