@@ -15,6 +15,10 @@ export default function Home() {
 			if (data) {
 				setPokemonList([...pokemonList, ...data.results]);
 				setOffset(offset + 12);
+
+				if (!data.next) {
+					setOffset(0);
+				}
 			}
 		});
 	}
@@ -33,14 +37,14 @@ export default function Home() {
 			<div className="w-[900px] px-8 pb-4 bg-white rounded-lg">
 				<PokemonList data={pokemonList} />
 				<div className="flex w-full justify-center pt-20">
-					{offset ? (
+					{offset != 0 && (
 						<button
 							onClick={handleLoadMorePokemon}
 							className="py-2 px-4 text-white rounded bg-[#30A7D7] hover:bg-[#1b82b1]"
 						>
 							Cargar más Pokémon
 						</button>
-					) : null}
+					)}
 				</div>
 			</div>
 		</main>
