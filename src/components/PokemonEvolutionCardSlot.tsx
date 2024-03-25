@@ -6,15 +6,12 @@ import PokemonTypeChip from "./PokemonTypeChip";
 
 export default function PokemonEvolutionCardSlot({
 	pokemon,
-	key,
 }: {
 	pokemon: Pokemon;
-	key: number;
 }) {
 	return (
 		<Link
 			href={`/pokemon/${pokemon.id}`}
-			key={key}
 			className="flex flex-col items-center gap-3"
 		>
 			<Image
