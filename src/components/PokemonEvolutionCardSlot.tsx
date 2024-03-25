@@ -33,14 +33,14 @@ export default function PokemonEvolutionCardSlot({
 				{/* There might be a better solution for this */}
 				{pokemon.types.length == 1 ? (
 					<div className="flex justify-center">
-						{pokemon.types.map((type) => (
-							<PokemonTypeChip typeName={type.type.name} />
+						{pokemon.types.map((type, index) => (
+							<PokemonTypeChip key={index} typeName={type.type.name} />
 						))}
 					</div>
 				) : (
 					<div className={`grid grid-cols-${pokemon.types.length} gap-1`}>
-						{pokemon.types.map((type) => (
-							<PokemonTypeChip typeName={type.type.name} />
+						{pokemon.types.map((type, index) => (
+							<PokemonTypeChip key={index} typeName={type.type.name} />
 						))}
 					</div>
 				)}
