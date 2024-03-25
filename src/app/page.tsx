@@ -3,31 +3,56 @@
 import PokemonList from "@/components/PokemonList";
 import { getPokemonList } from "@/lib/pokemon";
 import type { NamedAPIResource } from "@/lib/types";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-// https://pokeapi.co/docs/v2
 
 export default function Home() {
+	const router = useRouter();
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
 	const [pokemonList, setPokemonList] = useState<NamedAPIResource[]>([]);
-	const [offset, setOffset] = useState<number>(0);
+	const [isNextAvailable, setIsNextAvailable] = useState(true);
 
 	function handleLoadMorePokemon() {
+		const offset = +(searchParams.get("offset") || 12);
+
 		getPokemonList(12, offset).then((data) => {
 			if (data) {
 				setPokemonList([...pokemonList, ...data.results]);
-				setOffset(offset + 12);
+				const currentSearchParams = new URLSearchParams(
+					Array.from(searchParams.entries())
+				);
+				currentSearchParams.set("offset", (offset + 12).toString());
 
 				if (!data.next) {
-					setOffset(0);
+					setIsNextAvailable(false);
 				}
+
+				const search = currentSearchParams.toString();
+				const query = search ? `?${search}` : "";
+				router.replace(pathname + query, { scroll: false });
 			}
 		});
 	}
 
 	useEffect(() => {
-		getPokemonList(12, 0).then((data) => {
+		const offset = +(searchParams.get("offset") || 12);
+
+		getPokemonList(+(searchParams.get("offset") || 12), 0).then((data) => {
 			if (data) {
 				setPokemonList(data.results);
-				setOffset(12);
+				const currentSearchParams = new URLSearchParams(
+					Array.from(searchParams.entries())
+				);
+				currentSearchParams.set("offset", offset.toString());
+
+				if (!data.next) {
+					setIsNextAvailable(false);
+				}
+
+				const search = currentSearchParams.toString();
+				const query = search ? `?${search}` : "";
+				router.replace(pathname + query);
 			}
 		});
 	}, []);
@@ -37,7 +62,7 @@ export default function Home() {
 			<div className="w-[900px] px-8 pb-4 bg-white rounded-lg">
 				<PokemonList data={pokemonList} />
 				<div className="flex w-full justify-center pt-20">
-					{offset != 0 && (
+					{isNextAvailable && (
 						<button
 							onClick={handleLoadMorePokemon}
 							className="py-2 px-4 text-white rounded bg-[#30A7D7] hover:bg-[#1b82b1]"
