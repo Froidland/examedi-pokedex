@@ -5,6 +5,7 @@ import PokemonTypeChip from "./PokemonTypeChip";
 import { getPokemonById } from "@/lib/pokemon";
 import { useEffect, useState } from "react";
 import type { Pokemon } from "@/lib/types";
+import PokemonThumbnail from "./PokemonThumbnail";
 
 export default function PokemonCard({
 	name,
@@ -20,15 +21,9 @@ export default function PokemonCard({
 	}, [pokemonId]);
 
 	return (
-		<div className="p-2 flex flex-col items-center mb-6 max-w-64">
 		<div className="p-2 flex flex-col items-center pb-8 max-w-64">
 			<Link href={`/pokemon/${pokemonId}`}>
-				<PokemonAvatar
-					pokemonName={name}
-					pokemonId={pokemonId}
-					width={250}
-					height={250}
-				/>
+				<PokemonThumbnail pokemonName={name} pokemonId={pokemonId} />
 			</Link>
 			<div className="flex flex-col w-full px-3 pt-1">
 				<span className="text-[#919191] text-xs font-bold">

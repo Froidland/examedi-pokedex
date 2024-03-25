@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function PokemonAvatar({
+export default function PokemonThumbnail({
 	pokemonName,
 	pokemonId,
 }: {
@@ -12,10 +12,10 @@ export default function PokemonAvatar({
 			src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemonId
 				.toString()
 				.padStart(3, "0")}.png`}
-			className="bg-[#F2F2F2] rounded p-2"
+			className="bg-[#F2F2F2] rounded-md p-2"
 			alt={pokemonName ? "An image of " + pokemonName : "An image of a pokemon"}
-			width={450}
-			height={450}
+			width={250}
+			height={250}
 		></Image>
 	);
 }
