@@ -38,7 +38,7 @@ export default function Home() {
 	useEffect(() => {
 		const offset = +(searchParams.get("offset") || 12);
 
-		getPokemonList(+(searchParams.get("offset") || 12), 0).then((data) => {
+		getPokemonList(offset, 0).then((data) => {
 			if (data) {
 				setPokemonList(data.results);
 				const currentSearchParams = new URLSearchParams(
